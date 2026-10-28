@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot name="arm6dof">
+
+  <material name="grey"><color rgba="0.5 0.5 0.5 1"/></material>
+  <material name="blue"><color rgba="0.2 0.4 0.9 1"/></material>
+
+  <!-- BASE: sits on the table -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.01"/>
+      <geometry><cylinder radius="0.07" length="0.02"/></geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <!-- JOINT 1: base rotation. Axis Z. Placed base_h up (PLACEHOLDER 0.07) -->
+  <link name="turret">
+    <visual>
+      <origin xyz="0 0 0.035"/>
+      <geometry><box size="0.05 0.05 0.07"/></geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+  <joint name="j1_base" type="revolute">
+    <parent link="base_link"/><child link="turret"/>
+    <origin xyz="0 0 0.0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.40" upper="1.40" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- JOINT 2: shoulder. Axis Y. Upper arm length L1 (PLACEHOLDER 0.105) -->
+  <link name="upper_arm">
+    <visual>
+      <origin xyz="0 0 0.0525"/>
+      <geometry><box size="0.03 0.03 0.105"/></geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+  <joint name="j2_shoulder" type="revolute">
+    <parent link="turret"/><child link="upper_arm"/>
+    <origin xyz="0 0 0.07"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.40" upper="1.40" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- JOINT 3: elbow. Axis Y. Forearm length L2 (PLACEHOLDER 0.098) -->
+  <link name="forearm">
+    <visual>
+      <origin xyz="0 0 0.049"/>
+      <geometry><box size="0.03 0.03 0.098"/></geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+  <joint name="j3_elbow" type="revolute">
+    <parent link="upper_arm"/><child link="forearm"/>
+    <origin xyz="0 0 0.105"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.40" upper="1.40" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- JOINT 4: wrist pitch. Axis Y. Short wrist link (PLACEHOLDER 0.04) -->
+  <link name="wrist">
+    <visual>
+      <origin xyz="0 0 0.02"/>
+      <geometry><box size="0.03 0.03 0.04"/></geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+  <joint name="j4_wrist_pitch" type="revolute">
+    <parent link="forearm"/><child link="wrist"/>
+    <origin xyz="0 0 0.098"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.40" upper="1.40" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- JOINT 5: wrist roll. Axis Z. Gripper length (PLACEHOLDER 0.09) -->
+  <link name="gripper">
+    <visual>
+      <origin xyz="0 0 0.045"/>
+      <geometry><box size="0.06 0.02 0.09"/></geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+  <joint name="j5_wrist_roll" type="revolute">
+    <parent link="wrist"/><child link="gripper"/>
+    <origin xyz="0 0 0.04"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.40" upper="1.40" effort="1" velocity="1"/>
+  </joint>
+
+</robot>
