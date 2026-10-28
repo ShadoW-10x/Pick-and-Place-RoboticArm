@@ -3,7 +3,7 @@ import pybullet as p,pybullet_data,time
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.loadURDF("plane.urdf")
-arm=p.loadURDF(r"C:\armproject\arm6dof.urdf",useFixedBase=True)
+arm=p.loadURDF(r"arm6dof.urdf",useFixedBase=True)
 
 sliders={}
 for i in range(p.getNumJoints(arm)):
